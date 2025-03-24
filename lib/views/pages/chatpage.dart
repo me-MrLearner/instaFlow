@@ -34,7 +34,7 @@ class ChatsPage extends StatelessWidget {
         children: [
           // Horizontal ListView
           SizedBox(
-            height: 110,
+            height: 103,
             child: Expanded(
               child: ListView.builder(
                 scrollDirection: Axis.horizontal, // Makes the list horizontal
@@ -48,12 +48,19 @@ class ChatsPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(user.mediumPicture),
+                        SizedBox(
+                          height: 70,
+                          width: 70,
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                              user.mediumPicture,
+                              scale: 50,
+                            ),
+                          ),
                         ),
                         // SizedBox(height: 5),
                         Text(
-                          'User ${index + 1}', // Change this based on the data you want to display
+                          user.firstName, // Change this based on the data you want to display
                           style: TextStyle(fontSize: 12),
                         ),
                       ],
@@ -64,6 +71,24 @@ class ChatsPage extends StatelessWidget {
             ),
           ),
           Divider(color: Colors.red),
+          Flexible(
+            child: ListView.builder(
+              itemCount: userController.users.length,
+
+              itemBuilder: (context, index) {
+                var user = userController.users[index];
+                return Padding(
+                  padding: EdgeInsets.all(8),
+                  child: ListTile(
+                    leading: ClipOval(child: Image.network(user.largePicture)),
+                    title: Text(
+                      "${user.title} ${user.firstName} ${user.lastName}",
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
